@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Location } from "@angular/common";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Hero } from "../hero";
 import { HeroService } from "../hero.service";
 import { switchMap } from "rxjs/operators";
@@ -15,7 +15,7 @@ export class HeroDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private location: Location,
+    private router: Router,
     private heroService: HeroService
   ) {}
 
@@ -32,11 +32,11 @@ export class HeroDetailComponent implements OnInit {
 
   update() {
     if (this.hero) {
-      this.heroService.updateHero(this.hero).subscribe(() => this.goBack());
+      this.heroService.updateHero(this.hero).subscribe(() => this.goToHeroes());
     }
   }
 
-  goBack() {
-    this.location.back();
+  goToHeroes() {
+    this.router.navigate(["heroes", { id: this.hero?.id }]);
   }
 }

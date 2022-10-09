@@ -46,6 +46,14 @@ input {
   color: #fafafa;
 }
 
+.heroes .selected a {
+  background-color: #d6e6f7;
+}
+
+.heroes .selected a:hover {
+  background-color: #bdd7f5;
+}
+
 .heroes .badge {
   display: inline-block;
   font-size: small;
