@@ -16,7 +16,7 @@ export class HeroSearchComponent implements OnInit {
   constructor(private heroService: HeroService) {}
 
   search(term: string) {
-    this.searchTerms.next(term);
+    if (term.trim().length >= 3) this.searchTerms.next(term);
   }
 
   ngOnInit(): void {
