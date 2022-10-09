@@ -1,5 +1,3 @@
-import { HeroDetailComponent } from "./hero-detail/hero-detail.component";
-
 export interface Hero {
   id: number;
   name: string;

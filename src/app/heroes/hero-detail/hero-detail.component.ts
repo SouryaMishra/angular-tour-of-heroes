@@ -3,6 +3,7 @@ import { Location } from "@angular/common";
 import { ActivatedRoute } from "@angular/router";
 import { Hero } from "../hero";
 import { HeroService } from "../hero.service";
+import { switchMap } from "rxjs/operators";
 
 @Component({
   selector: "app-hero-detail",
@@ -23,6 +24,10 @@ export class HeroDetailComponent implements OnInit {
     this.heroService
       .getHero(Number(heroId))
       .subscribe((hero) => (this.hero = hero));
+
+    //  this.hero$ = this.route.paramMap.pipe(
+    //    switchMap((params: ParamMap) => this.service.getHero(params.get("id")!))
+    //  );
   }
 
   update() {
