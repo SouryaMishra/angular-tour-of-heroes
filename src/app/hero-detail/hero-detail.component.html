@@ -9,7 +9,13 @@
       [(ngModel)]="hero.name"
       placeholder="name"
     />
-    <button type="button" (click)="update()">Update</button>
+    <button
+      [disabled]="hero.name.trim() === ''"
+      type="button"
+      (click)="hero.name.trim() && update()"
+    >
+      Update
+    </button>
   </div>
   <button type="button" (click)="goBack()">Go Back</button>
 </div>
