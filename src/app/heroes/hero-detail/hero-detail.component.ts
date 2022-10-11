@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { Location } from "@angular/common";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Hero } from "../hero";
 import { HeroService } from "../hero.service";
 import { switchMap } from "rxjs/operators";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-hero-detail",
@@ -12,6 +12,7 @@ import { switchMap } from "rxjs/operators";
 })
 export class HeroDetailComponent implements OnInit {
   hero?: Hero;
+  // hero$?: Observable<Hero>;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,13 +31,13 @@ export class HeroDetailComponent implements OnInit {
     //  );
   }
 
-  update() {
-    if (this.hero) {
-      this.heroService.updateHero(this.hero).subscribe(() => this.goToHeroes());
+  update(hero: Hero) {
+    if (hero) {
+      this.heroService.updateHero(hero).subscribe(() => this.goToHeroes(hero));
     }
   }
 
-  goToHeroes() {
-    this.router.navigate(["heroes", { id: this.hero?.id }]);
+  goToHeroes(hero: Hero) {
+    this.router.navigate(["heroes", { id: hero ? hero.id : null }]);
   }
 }

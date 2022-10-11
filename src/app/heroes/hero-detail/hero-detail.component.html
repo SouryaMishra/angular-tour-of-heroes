@@ -12,10 +12,10 @@
     <button
       [disabled]="hero.name.trim() === ''"
       type="button"
-      (click)="hero.name.trim() && update()"
+      (click)="hero.name.trim() && update(hero)"
     >
       Update
     </button>
   </div>
-  <button type="button" (click)="goToHeroes()">Go to Heroes</button>
+  <button type="button" (click)="goToHeroes(hero)">Go to Heroes</button>
 </div>
