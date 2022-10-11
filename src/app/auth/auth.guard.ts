@@ -25,6 +25,14 @@ export class AuthGuard implements CanActivate {
     return this.checkLogin(url);
   }
 
+  canActivateChild(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): true | UrlTree {
+    console.log("AuthGuard#canActivateChild called");
+    return this.canActivate(route, state);
+  }
+
   /*
   As an alternative to using a CanActivate guard which redirects the user to a new page if they do not have access, 
   you can instead use a CanMatch guard to control whether the Router even attempts to activate a Route. 
