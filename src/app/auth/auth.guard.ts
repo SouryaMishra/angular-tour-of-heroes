@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import {
   ActivatedRouteSnapshot,
   CanActivate,
+  Route,
   Router,
   RouterStateSnapshot,
   UrlTree,
@@ -22,6 +23,17 @@ export class AuthGuard implements CanActivate {
     console.log("AuthGuard#canActivate called");
     const url = state.url;
     return this.checkLogin(url);
+  }
+
+  /*
+  As an alternative to using a CanActivate guard which redirects the user to a new page if they do not have access, 
+  you can instead use a CanMatch guard to control whether the Router even attempts to activate a Route. 
+  This allows you to have multiple Route configurations which share the same path but are matched based on different conditions. 
+  In addition, this approach can allow the Router to match the wildcard Route instead.
+*/
+  canMatch(route: Route) {
+    const url = `/${route.path}`;
+    return this.checkLogin(url) === true;
   }
 
   checkLogin(redirectUrl: string) {

@@ -11,6 +11,7 @@ const adminRoutes: Routes = [
     path: "admin",
     component: AdminComponent,
     canActivate: [AuthGuard],
+    // canMatch: [AuthGuard],    // Alternative to canActivate
     children: [
       {
         path: "",
