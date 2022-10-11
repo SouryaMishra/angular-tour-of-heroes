@@ -27,7 +27,7 @@ export class CrisisListComponent implements OnInit {
     // this.crises$ = this.route.paramMap.pipe(
     //   switchMap((params) => {
     //     this.selectedCrisisId = parseInt(params.get("id")!, 10);
-    //     return this.crisisService.getCrisises();
+    //     return this.crisisService.getCrises();
     //   })
     // );
   }
