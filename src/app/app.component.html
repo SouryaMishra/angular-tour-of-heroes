@@ -15,6 +15,9 @@
   <a routerLink="/heroes" routerLinkActive="active" ariaCurrentWhenActive="page"
     >Heroes</a
   >
+  <a routerLink="/admin" routerLinkActive="active" ariaCurrentWhenActive="page"
+    >Admin</a
+  >
   <a [routerLink]="[{ outlets: { popup: ['compose'] } }]">Contact</a>
 </nav>
 <router-outlet></router-outlet>
