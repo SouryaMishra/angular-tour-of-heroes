@@ -1,0 +1,23 @@
+<h2>Crisis detail component</h2>
+
+<div *ngIf="crisis">
+  <h2>{{ crisis.name | uppercase }} Details</h2>
+  <div>id: {{ crisis.id }}</div>
+  <div>
+    <label for="crisis-name">Crisis name: </label>
+    <input
+      id="crisis-name"
+      type="text"
+      [(ngModel)]="crisis.name"
+      placeholder="name"
+    />
+    <button
+      [disabled]="crisis.name.trim() === ''"
+      type="button"
+      (click)="crisis.name.trim() && update()"
+    >
+      Update
+    </button>
+  </div>
+  <button type="button" (click)="goToCrises()">Go to Crises</button>
+</div>

@@ -10,9 +10,9 @@ import { MessagesComponent } from "./messages/messages.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { HeroSearchComponent } from "./hero-search/hero-search.component";
-import { CrisisListComponent } from "./crisis-list/crisis-list.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { HeroesModule } from "./heroes/heroes.module";
+import { CrisisCenterModule } from "./crisis-center/crisis-center.module";
 
 @NgModule({
   declarations: [
@@ -20,7 +20,6 @@ import { HeroesModule } from "./heroes/heroes.module";
     MessagesComponent,
     DashboardComponent,
     HeroSearchComponent,
-    CrisisListComponent,
     PageNotFoundComponent,
   ],
   imports: [
@@ -31,6 +30,7 @@ import { HeroesModule } from "./heroes/heroes.module";
       dataEncapsulation: false,
     }),
     HeroesModule,
+    CrisisCenterModule,
     AppRoutingModule,
   ],
   providers: [],
