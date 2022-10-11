@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { Location } from "@angular/common";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { Crisis } from "../crisis";
 import { CrisisService } from "../crisis.service";
 import { switchMap } from "rxjs/operators";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-crisis-detail",
@@ -11,7 +11,8 @@ import { switchMap } from "rxjs/operators";
   styleUrls: ["./crisis-detail.component.css"],
 })
 export class CrisisDetailComponent implements OnInit {
-  crisis?: Crisis;
+  // crisis?: Crisis;
+  crisis$?: Observable<Crisis>;
 
   constructor(
     private route: ActivatedRoute,
@@ -20,30 +21,29 @@ export class CrisisDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const crisisId = this.route.snapshot.paramMap.get("id");
-    this.crisisService
-      .getCrisis(Number(crisisId))
-      .subscribe((crisis) => (this.crisis = crisis));
+    // const crisisId = this.route.snapshot.paramMap.get("id");
+    // this.crisisService
+    //   .getCrisis(Number(crisisId))
+    //   .subscribe((crisis) => (this.crisis = crisis));
 
-    //  this.crisis$ = this.route.paramMap.pipe(
-    //    switchMap((params: ParamMap) => this.service.getCrisis(params.get("id")!))
-    //  );
+    this.crisis$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+        this.crisisService.getCrisis(parseInt(params.get("id")!))
+      )
+    );
   }
 
-  update() {
-    if (this.crisis) {
+  update(crisis: Crisis) {
+    if (crisis) {
       this.crisisService
-        .updateCrisis(this.crisis)
-        .subscribe(() => this.goToCrises());
+        .updateCrisis(crisis)
+        .subscribe(() => this.goToCrises(crisis));
     }
   }
 
-  goToCrises() {
-    this.router.navigate(["../", { id: this.crisis?.id }], {
+  goToCrises(crisis: Crisis) {
+    this.router.navigate(["../", { id: crisis ? crisis.id : null }], {
       relativeTo: this.route,
     });
-    // this.router.navigate(["../", { id: crisisId, foo: "foo" }], {
-    //   relativeTo: this.route,
-    // });
   }
 }

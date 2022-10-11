@@ -1,9 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Crisis } from "../crisis";
 import { CrisisService } from "../crisis.service";
-import { MessageService } from "../../message.service";
 import { ActivatedRoute } from "@angular/router";
-import { Observable, switchMap } from "rxjs";
+import { map, Observable, switchMap } from "rxjs";
 
 @Component({
   selector: "app-crisise-list",
@@ -11,8 +10,8 @@ import { Observable, switchMap } from "rxjs";
   styleUrls: ["./crisis-list.component.css"],
 })
 export class CrisisListComponent implements OnInit {
-  crises: Crisis[] = [];
-  // crises$?: Observable<Crisis[]>;
+  // crises: Crisis[] = [];
+  crises$?: Observable<Crisis[]>;
   selectedCrisisId?: number;
 
   constructor(
@@ -21,32 +20,25 @@ export class CrisisListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.selectedCrisisId = parseInt(this.route.snapshot.paramMap.get("id")!);
-    this.getCrises();
+    // this.selectedCrisisId = parseInt(this.route.snapshot.paramMap.get("id")!);
+    // this.getCrises();
 
-    // this.crises$ = this.route.paramMap.pipe(
-    //   switchMap((params) => {
-    //     this.selectedCrisisId = parseInt(params.get("id")!, 10);
-    //     return this.crisisService.getCrises();
-    //   })
-    // );
-  }
-
-  getCrises(): void {
-    this.crisisService
-      .getCrises()
-      .subscribe((crises) => (this.crises = crises));
-  }
-
-  add(crisisName: string) {
-    if (!crisisName.trim()) return;
-    this.crisisService
-      .addCrisis({ name: crisisName })
-      .subscribe((crisis) => this.crises.push(crisis));
+    this.crises$ = this.route.paramMap.pipe(
+      switchMap((params) => {
+        this.selectedCrisisId = parseInt(params.get("id")!);
+        return this.crisisService.getCrises();
+      })
+    );
   }
 
   delete(crisis: Crisis) {
-    this.crises = this.crises.filter((c) => c !== crisis);
-    this.crisisService.deleteCrisis(crisis.id).subscribe();
+    // this.crises = this.crises.filter((c) => c !== crisis);
+    // this.crisisService.deleteCrisis(crisis.id).subscribe();
+
+    this.crisisService.deleteCrisis(crisis.id).subscribe(() => {
+      this.crises$ = this.crises$?.pipe(
+        map((crises) => crises.filter((c) => c.id !== crisis.id))
+      );
+    });
   }
 }
