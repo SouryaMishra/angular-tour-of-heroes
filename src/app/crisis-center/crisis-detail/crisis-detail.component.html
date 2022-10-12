@@ -1,6 +1,6 @@
 <h2>Crisis detail component</h2>
 
-<div *ngIf="crisis$ | async as crisis">
+<div *ngIf="crisis">
   <h2>{{ crisis.name | uppercase }} Details</h2>
   <div>id: {{ crisis.id }}</div>
   <div>
@@ -8,13 +8,13 @@
     <input
       id="crisis-name"
       type="text"
-      [(ngModel)]="crisis.name"
+      [(ngModel)]="editName"
       placeholder="name"
     />
     <button
-      [disabled]="crisis.name.trim() === ''"
+      [disabled]="editName.trim() === ''"
       type="button"
-      (click)="crisis.name.trim() && update(crisis)"
+      (click)="editName.trim() && update(crisis)"
     >
       Update
     </button>

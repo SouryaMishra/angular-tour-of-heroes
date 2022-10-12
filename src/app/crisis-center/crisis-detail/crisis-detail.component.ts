@@ -11,8 +11,9 @@ import { Observable } from "rxjs";
   styleUrls: ["./crisis-detail.component.css"],
 })
 export class CrisisDetailComponent implements OnInit {
-  // crisis?: Crisis;
-  crisis$?: Observable<Crisis>;
+  crisis!: Crisis;
+  // crisis$?: Observable<Crisis>;
+  editName = "";
 
   constructor(
     private route: ActivatedRoute,
@@ -21,23 +22,44 @@ export class CrisisDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // v1
     // const crisisId = this.route.snapshot.paramMap.get("id");
     // this.crisisService
     //   .getCrisis(Number(crisisId))
     //   .subscribe((crisis) => (this.crisis = crisis));
 
-    this.crisis$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-        this.crisisService.getCrisis(parseInt(params.get("id")!))
+    // v2
+    // this.crisis$ = this.route.paramMap.pipe(
+    //   switchMap((params: ParamMap) =>
+    //     this.crisisService.getCrisis(parseInt(params.get("id")!))
+    //   )
+    // );
+
+    // v3
+    this.route.paramMap
+      .pipe(
+        switchMap((params: ParamMap) =>
+          this.crisisService.getCrisis(parseInt(params.get("id")!))
+        )
       )
-    );
+      .subscribe((crisis) => {
+        if (!crisis) {
+          this.goToCrises(crisis);
+          return;
+        }
+        this.crisis = crisis;
+        this.editName = crisis.name;
+      });
   }
 
   update(crisis: Crisis) {
-    if (crisis) {
+    if (this.editName) {
       this.crisisService
-        .updateCrisis(crisis)
-        .subscribe(() => this.goToCrises(crisis));
+        .updateCrisis({ id: crisis.id, name: this.editName })
+        .subscribe(() => {
+          this.crisis.name = this.editName;
+          this.goToCrises(crisis);
+        });
     }
   }
 
