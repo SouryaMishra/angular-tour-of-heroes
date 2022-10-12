@@ -4,6 +4,7 @@ import { Crisis } from "../crisis";
 import { CrisisService } from "../crisis.service";
 import { switchMap } from "rxjs/operators";
 import { Observable } from "rxjs";
+import { DialogService } from "src/app/dialog.service";
 
 @Component({
   selector: "app-crisis-detail",
@@ -18,7 +19,8 @@ export class CrisisDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private crisisService: CrisisService
+    private crisisService: CrisisService,
+    public dialogService: DialogService
   ) {}
 
   ngOnInit(): void {
@@ -67,5 +69,16 @@ export class CrisisDetailComponent implements OnInit {
     this.router.navigate(["../", { id: crisis ? crisis.id : null }], {
       relativeTo: this.route,
     });
+  }
+
+  // Component specific canDeactivate guard
+  canDeactivate(): Observable<boolean> | boolean {
+    // Allow synchronous navigation (`true`) if no crisis or the crisis is unchanged
+    if (!this.crisis || this.crisis.name === this.editName) {
+      return true;
+    }
+    // Otherwise ask the user with the dialog service and return its
+    // observable which resolves to true or false when the user decides
+    return this.dialogService.confirm("Discard changes?");
   }
 }
