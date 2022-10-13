@@ -1,9 +1,10 @@
 import { NgModule } from "@angular/core";
-import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 import { AuthGuard } from "./auth/auth.guard";
 import { ComposeMessageComponent } from "./compose-message/compose-message.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
+import { SelectivePreloadingStrategyService } from "./selective-preloading-strategy.service";
 
 const routes: Routes = [
   { path: "dashboard", component: DashboardComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
       import("./crisis-center/crisis-center.module").then(
         (m) => m.CrisisCenterModule
       ),
+    data: { preload: true },
   },
   { path: "", redirectTo: "dashboard", pathMatch: "full" },
   { path: "**", component: PageNotFoundComponent },
@@ -34,7 +36,8 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {
       enableTracing: true,
-      preloadingStrategy: PreloadAllModules,
+      // preloadingStrategy: PreloadAllModules,
+      preloadingStrategy: SelectivePreloadingStrategyService,
     }),
   ],
   exports: [RouterModule],
