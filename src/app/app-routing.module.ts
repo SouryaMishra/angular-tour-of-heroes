@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
+import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 import { AuthGuard } from "./auth/auth.guard";
 import { ComposeMessageComponent } from "./compose-message/compose-message.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
@@ -11,7 +11,7 @@ const routes: Routes = [
     path: "admin",
     loadChildren: () =>
       import("./admin/admin.module").then((m) => m.AdminModule),
-    canLoad: [AuthGuard],
+    canLoad: [AuthGuard], // Can't preload because of canLoad guard even though preloadingStrategy is PreloadAllModules
   },
   {
     path: "crisis-center",
@@ -31,7 +31,12 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [],
-  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
+  imports: [
+    RouterModule.forRoot(routes, {
+      enableTracing: true,
+      preloadingStrategy: PreloadAllModules,
+    }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
