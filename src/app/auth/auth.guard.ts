@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import {
   ActivatedRouteSnapshot,
   CanActivate,
+  NavigationExtras,
   Route,
   Router,
   RouterStateSnapshot,
@@ -47,6 +48,14 @@ export class AuthGuard implements CanActivate {
   checkLogin(redirectUrl: string) {
     if (this.authService.isLoggedIn) return true;
     this.authService.redirectUrl = redirectUrl;
-    return this.router.parseUrl("/login");
+    const sessionId = 123456789;
+    const navigationExtras: NavigationExtras = {
+      queryParams: { session_id: sessionId },
+      fragment: "anchor",
+    };
+    // Redirect to the login page
+    // return this.router.parseUrl("/login");
+    // Redirect to the login page with extras
+    return this.router.createUrlTree(["/login"], navigationExtras);
   }
 }
