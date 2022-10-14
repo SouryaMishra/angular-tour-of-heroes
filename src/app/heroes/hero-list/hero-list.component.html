@@ -16,7 +16,7 @@
 
 <ul class="heroes">
   <li *ngFor="let hero of heroes" [class.selected]="hero.id === selectedHeroId">
-    <a routerLink="/heroes/{{ hero.id }}">
+    <a [routerLink]="['/superheroes', hero.id]">
       <span class="badge">{{ hero.id }}</span>
       {{ hero.name }}
     </a>

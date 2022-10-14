@@ -22,7 +22,7 @@ const routes: Routes = [
       ),
     data: { preload: true },
   },
-  { path: "", redirectTo: "dashboard", pathMatch: "full" },
+  { path: "", redirectTo: "/superheroes", pathMatch: "full" },
   { path: "**", component: PageNotFoundComponent },
   {
     path: "compose",
