@@ -15,6 +15,7 @@ import { HeroesModule } from "./heroes/heroes.module";
 import { ComposeMessageComponent } from "./compose-message/compose-message.component";
 import { LoginComponent } from "./auth/login/login.component";
 import { AuthModule } from "./auth/auth.module";
+import { Router } from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -40,4 +41,12 @@ import { AuthModule } from "./auth/auth.module";
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(router: Router) {
+    // Use a custom replacer to display function names in the route configs
+    const replacer = (_: any, value: any) =>
+      typeof value === "function" ? value.name : value;
+
+    console.log("Routes: ", JSON.stringify(router.config, replacer, 2));
+  }
+}
