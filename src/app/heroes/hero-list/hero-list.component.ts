@@ -6,7 +6,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Observable, switchMap } from "rxjs";
 
 @Component({
-  selector: "app-heroe-list",
+  selector: "app-hero-list",
   templateUrl: "./hero-list.component.html",
   styleUrls: ["./hero-list.component.css"],
 })
