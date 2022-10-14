@@ -23,7 +23,10 @@
   >
   <a [routerLink]="[{ outlets: { popup: ['compose'] } }]">Contact</a>
 </nav>
-<div [@routeAnimation]="getAnimationData()">
+<div
+  [@routeAnimation]="getAnimationData()"
+  [ngStyle]="{ 'min-height.px': 605 }"
+>
   <router-outlet></router-outlet>
 </div>
 <router-outlet name="popup"></router-outlet>
