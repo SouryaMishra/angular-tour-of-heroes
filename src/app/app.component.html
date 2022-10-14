@@ -23,6 +23,8 @@
   >
   <a [routerLink]="[{ outlets: { popup: ['compose'] } }]">Contact</a>
 </nav>
-<router-outlet></router-outlet>
+<div [@routeAnimation]="getAnimationData()">
+  <router-outlet></router-outlet>
+</div>
 <router-outlet name="popup"></router-outlet>
 <app-messages></app-messages>

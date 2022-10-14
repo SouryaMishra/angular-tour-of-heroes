@@ -24,3 +24,6 @@ button:disabled {
   color: #ccc;
   cursor: auto;
 }
+.hero-detail {
+  min-height: 605px;
+}
